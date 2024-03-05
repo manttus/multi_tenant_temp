@@ -8,11 +8,11 @@ export class AuthenticationService {
   async signin(signinDto: { email: string; password: string }) {
     try {
       const response = await firstValueFrom(
-        this.httpService.post(
-          'http://localhost:8080/realms/company_formation/protocol/openid-connect/token',
+     this.httpService.post(
+          'http://localhost:8080/realms/test_realm/protocol/openid-connect/token',
           new URLSearchParams({
-            client_id: 'company_client',
-            client_secret: 'hQfgNzTVwCykUchgrfSR1w94kRQIg64D',
+            client_id: 'test_client',
+            client_secret: 'sWFMnlsH7W0wJI7a12GzjhlBrCa1B63o',
             grant_type: 'password',
             username: signinDto.email,
             password: signinDto.password,
@@ -103,5 +103,20 @@ export class AuthenticationService {
           : 'Something went wrong',
       };
     }
+  }
+
+  async resetPassword() {
+    try {
+      const roles = await firstValueFrom(
+        this.httpService.get(
+          'http://localhost:8080/admin/realms/{realm}/users/{id}/reset-password',
+          {
+            headers: {
+              Authorization: `Bearer Brrrrrrr`,
+            },
+          },
+        ),
+      );
+    } catch (err) {}
   }
 }
